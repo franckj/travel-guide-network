@@ -47,6 +47,8 @@ Reference site: ilovecatalonia.com (built with this same prompt)
 - **Content**: Astro Content Collections for all repeatable content
 - **SEO**: astro-seo package — meta tags, OG tags, JSON-LD on every page
 - **Analytics**: Plausible (privacy-first, no cookies, no consent banner needed)
+  ⚠️ The Plausible script snippet is site-specific — get it from your Plausible dashboard
+  after creating the site. Do NOT use a generic domain-based script. See BASE LAYOUT below.
 - **i18n**: Set up subdirectory routing (/en/, /ca/, /es/) from day one even if only English is live
 
 ---
@@ -130,6 +132,19 @@ Must include in `<head>` on every page:
 - twitter:card, twitter:title, twitter:description, twitter:image (absolute URL)
 - twitter:site, twitter:creator
 - `@astrojs/sitemap` auto-generation (configured in astro.config.mjs)
+- Plausible analytics — use the EXACT snippet from your Plausible dashboard
+  (Dashboard → [site] → Settings → Goals & Script → Copy snippet).
+  The correct format uses a site-specific script URL, NOT a domain parameter:
+  ```html
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-XXXXXXXXXXXXXXXXXXXXXXXX.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+    plausible.init()
+  </script>
+  ```
+  Replace the `pa-XXXX` part with your actual script ID from the dashboard.
+  ⚠️ Do NOT use `<script defer data-domain="...">` — that is the legacy format and may not track correctly.
 - Google AdSense script placeholder (commented out — uncomment when approved)
 - WebSite JSON-LD on homepage only:
   ```json
